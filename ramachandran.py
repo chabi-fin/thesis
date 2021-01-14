@@ -6,21 +6,32 @@ import mdtraj as md
 import os
 import matplotlib.pyplot as plt
 
-mims = ["FY1a", "FY1b", "FY2a", "FY2b", "FY3a", "FY3b", "FY5a", "FY5b", "FY6a"]# "FY6b"]
+# Dictionary for phi and psi indicies
+mims = {"FY1" : ((5,7,9,26),(7,9,26,33)), "FY2" : ((5,7,9,26),(7,9,26,33)), \
+        "FY3" : ((5,7,9,26),(7,9,26,35)), "FY5" : ((5,7,9,27),(7,9,27,41)), \
+        "FY6" : ((5,7,9,26),(7,9,26,32))}
 
 home = os.getcwd() 
 font = {'color': 'black', 'weight': 'semibold', 'size': 20}
 
-for mim in mims:
+conformations = []
+for mim in mims.keys():
+    conformations.append(mim + "a")
+    conformations.append(mim + "b")
 
-    # Enter directory for mimetic
+for mim in conformations:
+    
+    # Mimetic name, e.g. "FY1"
+    base = mim[:-1]
+    
+    # Enter directory for mimetic, top : qcm, bottom : local
     #os.chdir("/home/finnl92/thesis/stage2chg-param/" + mim)
     os.chdir("C:/Users/Lauren/Documents/Thesis/stage2chg-param/" + mim)
     
     # Obtain the dihedrals from the trajectory
     traj = md.load("fTyr_md.xtc", top="fTyr_md.gro").remove_solvent()
     atoms, bonds = traj.topology.to_dataframe()
-    phi_indicies, psi_indicies = [5, 7, 9, 26], [7, 9, 26, 33]
+    phi_indicies, psi_indicies = mims[base]
     angles = md.compute_dihedrals(traj, [phi_indicies, psi_indicies])
     
     # Create a plot
