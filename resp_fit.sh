@@ -1,22 +1,27 @@
 #!/bin/bash
 
-#mims=("FY1a" "FY1b" "FY2a" "FY2b" "FY3a" "FY3b" "FY5a" "FY5b" "FY6a" "FY6b")
-
-mims=("FY2a" "FY2b")
+# name and conformation of each mimetic
+mims=("FY1a" "FY1b" "FY2a" "FY2b" "FY3a" "FY3b" "FY5a" "FY5b" "FY6a" "FY6b")
 
 for mim in "${mims[@]}"; do
 
+	# Set up list of directories to loop over
 	cd ~/thesis/stage2chg-param/$mim/configurations/
-	
 	dirs=($(find . -type d -name "config_*"))
 	home=$(pwd)
 	
 	for dir in ${dirs[@]}
 	do
+		# include input files
 		cp resp1.in resp2.in resp1.qin $dir/
 		cd $dir/	
-
-		espgen -i geo.gesp -o geo.esp
+		
+		# process gaussian output to ESP
+		if [ ! -f geo.gesp ]; then
+		    echo $(pwd) 
+		else
+		    espgen -i geo.gesp -o geo.esp
+		fi
 
 		# first iteration of resp procedure
 		resp -O -i resp1.in -o resp1.out -p resp1.pch -t resp1.chg -q resp1.qin -e geo.esp
