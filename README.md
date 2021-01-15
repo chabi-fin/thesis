@@ -10,21 +10,27 @@ gen_res_top.py
 
 CHARGE FITTING PROCEDURE:
 1) Obtain alpha & beta constrained simulations
+
    stage2_sims.sh
 		
 2) Extract conformations at 1 nm intervals from the simulations
+
    extract_conformations.py
 
 3) Perform single point HF/6-31G* calculation on each conformation
+
    single_pt.sh
 
 4) Perform a RESP fitting for each conformation
+
    resp_fit.sh
 
-5) From the RESP fit charges of all conformations, both alpha and beta, find the average charge.
-   This step completes stage 2 of the charge parameterization and can be applied to the ff.
+5) From the RESP fit charges of all conformations, both alpha and beta, find the average charge
+   This step completes stage 2 of the charge parameterization and can be applied to the ff
+   
    ave_charges.py
 
 6) Verify the output with Ramachandran and chi_1 dihedral plots
+
    ramachandran.py  
 
