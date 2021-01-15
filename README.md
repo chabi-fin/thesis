@@ -1,8 +1,10 @@
-# thesis
+# Thesis
 Python programs and bash scripts related to my Masters thesis in AG Keller at FU Berlin
 
 GET BONDED PARAMETERS FROM GAFF
+
 gen_res_top.py
+
     A topology is generated for a Tyrosine mimetic for the Amber 14 SB force
     field (ff). A print statement notifies which parameters must be added to 
     the ff (atom types, bonds, angles, (improper) dihedrals, nonbonded).     
