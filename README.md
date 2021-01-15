@@ -5,10 +5,10 @@ GET BONDED PARAMETERS FROM GAFF
 
 gen_res_top.py
 
-    A topology is generated for a Tyrosine mimetic for the Amber 14 SB force
-    field (ff). A print statement notifies which parameters must be added to 
-    the ff (atom types, bonds, angles, (improper) dihedrals, nonbonded).     
-    The .pdb file is also edited to label residues as residue, NME or ACE.
+	A topology is generated for a Tyrosine mimetic for the Amber 14 SB force
+    	field (ff). A print statement notifies which parameters must be added to 
+    	the ff (atom types, bonds, angles, (improper) dihedrals, nonbonded).     
+    	The .pdb file is also edited to label residues as residue, NME or ACE.
 
 CHARGE FITTING PROCEDURE:
 1) Obtain alpha & beta constrained simulations
@@ -32,7 +32,8 @@ CHARGE FITTING PROCEDURE:
    
    ave_charges.py
    
-    	Finds the average charges from multiconformational RESP fits. The RESP output file from the second iteration, 'resp2.out' is used to retrieve the fitted charge from each configuration.
+   	Finds the average charges from multiconformational RESP fits. The RESP output file from 
+	the second iteration, resp2.out, is used to retrieve the fitted charge from each configuration.
 
 6) Verify the output with Ramachandran and chi_1 dihedral plots
 
