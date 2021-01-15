@@ -35,8 +35,8 @@ CHARGE FITTING PROCEDURE:
     	Finds the average charges from multiconformational RESP fits.
     	Subdirectories for the configurations are named 'config_xx'. The .pdb in 
     	config_0 directory is used to define the atoms by number in the dictionary
-   	Residue.atoms. The RESP output file from the second iteration, 'resp2.out' is
-    	used to retrieve the fitted charge from each configuration.
+	Residue.atoms. The RESP output file from the second iteration, 'resp2.out' is
+  	used to retrieve the fitted charge from each configuration.
 
 6) Verify the output with Ramachandran and chi_1 dihedral plots
 
