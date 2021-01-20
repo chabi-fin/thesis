@@ -27,8 +27,8 @@ for mim in conformations:
     base = mim[:-1]
     
     # Enter directory for mimetic, top : qcm, bottom : local
-    #os.chdir("/home/finnl92/thesis/stage2chg-param/" + mim)
-    os.chdir("C:/Users/Lauren/Documents/Thesis/stage2chg-param/" + mim)
+    os.chdir("/home/finnl92/thesis/stage2chg-param/" + mim)
+    #os.chdir("C:/Users/Lauren/Documents/Thesis/stage2chg-param/" + mim)
     
     # Obtain the dihedrals from the trajectory
     traj = md.load("fTyr_md.xtc", top="fTyr_md.gro").remove_solvent()
@@ -37,6 +37,14 @@ for mim in conformations:
     angles = md.compute_dihedrals(traj, [phi_indicies, psi_indicies, \
                                          chi_indicies])
     
+    # Get the position restraint vector
+    with open("posre.itp", mode="r") as file:
+        lines = file.readlines()
+    for i, line in enumerate(lines):
+        if i == 4: 
+            vector = line.split()[2:]
+    force_const = " ".join(vector) + r" kJ/mol$\cdot$nm$^{2}$"
+
     # Create a Ramachandran plot
     fig, ax = plt.subplots(figsize=(15,10))
     plt.scatter(angles[:, 0], angles[:, 1], marker='x', c=traj.time/1000)
@@ -56,7 +64,15 @@ for mim in conformations:
     for i in ["top","bottom","left","right"]:
         ax.spines[i].set_linewidth(3) 
     plt.grid(True)
-    plt.savefig("ramachandranplot.png")
+    plt.text(0.95, 0.05, "Force constant vector\n" + force_const, \
+            fontdict={"size" : 16}, transform=ax.transAxes, \
+            bbox=dict(boxstyle="round", fc="gainsboro", alpha=0.5), ma ="center", va="bottom", ha="right")
+    if mim[3] == "a":
+        conf = "alpha"
+    else:
+        conf = "beta"
+    plt.title("Fluorinated pTyr " + mim[2] + ", Confomation: " + conf, fontdict=font)
+    plt.savefig("ramachandranplot_" + mim[2:] + ".png")
     plt.show()
     
     # Create Chi_1 plot
@@ -64,6 +80,7 @@ for mim in conformations:
     plt.hist(angles[:, 2], bins=75, color="darkgoldenrod")
     plt.xlabel(r'$\chi_1$ Angle [radians]', fontdict=font, labelpad=10)
     plt.xlim(-np.pi, np.pi)
+    plt.title("Fluorinated pTyr " + mim[2] + ", Confomation: " + conf, fontdict=font)
     plt.tick_params(axis='y', labelsize=20, direction='in', width=2, \
                     length=5, pad=10)
     plt.tick_params(axis='x', labelsize=20, direction='in', width=2, \
@@ -71,5 +88,4 @@ for mim in conformations:
     for i in ["top","bottom","left","right"]:
         ax.spines[i].set_linewidth(3) 
     plt.grid(True)
-    plt.savefig("chi1_plot.png")
-    plt.show()
+    plt.savefig("chi1_plot_" + mim[2:] + ".png")
